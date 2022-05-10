@@ -171,4 +171,11 @@ RUN echo 'source /home/developer/ws_moveit/devel/setup.bash' >> ~/.bashrc
 RUN echo 'export PYTHONPATH=$PYTHONPATH:/home/developer/trajopt' >> ~/.bashrc
 RUN echo 'export PYTHONPATH=$PYTHONPATH:/home/developer/trajopt/build/lib' >> ~/.bashrc
 
+RUN sudo apt install ros-kinetic-pr2-description
+WORKDIR /home/developer/ws_moveit/src
+RUN git clone https://github.com/ros-industrial/ros_industrial_cmake_boilerplate.git
+RUN git clone --recursive -b kinetic-devel https://github.com/zyjiao4728/tesseract.git
+RUN git clone -b kinetic-devel https://github.com/tesseract-robotics/trajopt.git
+RUN catkin build
+
 CMD ["bash"]
