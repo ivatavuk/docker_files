@@ -184,8 +184,11 @@ RUN git clone -b 0.4.5  https://github.com/Jmeyer1292/opw_kinematics.git
 RUN git clone -b 2.1.3  https://github.com/ethz-adrl/ifopt.git
 
 RUN sudo apt-get install -y libeigen3-dev coinor-libipopt-dev libbullet-dev libbullet-extras-dev ros-noetic-fcl
-
-#RUN bash -c "catkin build"
+RUN sudo apt-get install -y software-properties-common
+RUN sudo add-apt-repository ppa:ros-industrial/ppa
+RUN sudo apt-get update
+RUN sudo apt-get install -y taskflow
+RUN bash -c "catkin build"
 
 CMD ["bash"]
 
