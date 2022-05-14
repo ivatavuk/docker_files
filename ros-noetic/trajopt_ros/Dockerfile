@@ -174,7 +174,7 @@ WORKDIR /home/developer/moveit_ws/src
 
 RUN sudo apt install ros-${ROS_DISTRO}-pr2-description
 WORKDIR /home/developer/moveit_ws/src
-RUN git clone https://github.com/tesseract-robotics/tesseract_ros.git
+RUN git clone -b 0.4.3 https://github.com/tesseract-robotics/tesseract_ros.git
 RUN git clone -b 0.2.15 https://github.com/ros-industrial/ros_industrial_cmake_boilerplate.git
 RUN git clone -b 0.9.6 https://github.com/tesseract-robotics/tesseract.git
 RUN git clone -b 0.2.4 https://github.com/tesseract-robotics/trajopt.git
@@ -189,6 +189,11 @@ RUN sudo add-apt-repository ppa:ros-industrial/ppa
 RUN sudo apt-get update
 RUN sudo apt-get install -y taskflow
 RUN bash -c "catkin build"
+WORKDIR /home/developer/moveit_ws
+RUN bash -c "source /home/developer/moveit_ws/devel/setup.bash"
+RUN bash -c "source /opt/ros/noetic/setup.bash"
+RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+RUN echo "source /home/developer/moveit_ws/devel/setup.bash" >> ~/.bashrc 
 
 CMD ["bash"]
 
