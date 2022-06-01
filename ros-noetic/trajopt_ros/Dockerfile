@@ -195,5 +195,19 @@ RUN bash -c "source /opt/ros/noetic/setup.bash"
 RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 RUN echo "source /home/developer/moveit_ws/devel/setup.bash" >> ~/.bashrc 
 
+WORKDIR /home/developer/moveit_ws/src
+RUN sudo apt install -y python3 python3-pip
+RUN sudo python3 -m pip install conan
+RUN conan config set general.revisions_enabled=1
+RUN conan profile new default --detect > /dev/null
+RUN conan profile update settings.compiler.libcxx=libstdc++11 default
+RUN git clone https://github.com/Kinovarobotics/ros_kortex.git
+
+WORKDIR /home/developer/moveit_ws
+RUN rosdep update
+RUN rosdep install --from-paths src --ignore-src -y
+
+RUN bash -c "catkin build kortex_gazebo"
+
 CMD ["bash"]
 
